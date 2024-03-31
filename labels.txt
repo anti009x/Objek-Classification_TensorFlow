@@ -1,2 +1,19 @@
-0 Kursi
-1 Pulpen
+Kursi
+Pulpen
+Minuman
+Sofa
+Makanan
+Buah
+Meja
+Baju
+keyboard
+Kasur
+Alas Kaki
+Lemari
+Tetikus
+Tas Punggung
+Laptop
+Monitor
+Celana
+Jaket
+Buku

@@ -1,46 +1,44 @@
 import cv2 as cv
 from cvzone.ClassificationModule import Classifier
 
-
 model_path = "keras_model.h5" 
 labels_path = "labels.txt"  
 data = Classifier(model_path, labels_path)
 
-# Initialize video capture from webcam
 cap = cv.VideoCapture(0)
+cap.set(cv.CAP_PROP_FRAME_WIDTH, 1280)
+cap.set(cv.CAP_PROP_FRAME_HEIGHT, 720)
 
 while True:
-
     ret, img = cap.read()
 
-
     if ret:
-
         predict, index = data.getPrediction(img, color=(255, 0, 0))
 
-        # Print prediction and class index for debugging (optional)        print(f"Prediction: {predict}, Class Index: {index}")
+        with open(labels_path, 'r') as file:
+            labels = file.readlines()
 
-        # Draw a rectangle around the detected object (optional)
-        # You might need to modify these coordinates based on your model's output
-        cv.rectangle(img, (10, 10), (200, 100), (0, 255, 0), 2)
+        labels = [label.strip() for label in labels]
+        #Baru 1 Model   
+        if labels[index] == "Pulpen":
+            deskripsi = "Barang Direkomendasikan Motor"
+            persentase = "100%"
+            nama = "Pulpen"
+            klasifikasi = "Ringan"
+            
+            print("Nama:", labels[index])
+            print("Deskripsi:", deskripsi)
+            print("Persentase Objek Detection:", persentase)
+            print("Klasifikasi:", klasifikasi)
 
-        # Display the predicted class label on the frame (optional)
-        cv.putText(img, f"{predict} ({labels_path[index]})", (30, 50),
-                   cv.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+        cv.imshow("Kamera", img)
 
-        # Display the frame with predictions
-        cv.imshow("frame", img)
-
-        # Handle user input for closing the program
         key = cv.waitKey(1)
-        if key == 27:  # Press 'Esc' to quit
+        if key == 27: 
             break
-
-    # Exit if frame capture fails
     else:
-        print("Error: Frame capture failed")
+        print("Invalid")
         break
 
-# Release resources when finished
 cap.release()
 cv.destroyAllWindows()
