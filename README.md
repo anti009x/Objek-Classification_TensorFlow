@@ -5,4 +5,4 @@ pip install tensorflow==2.15.0
 pip install uvicorn
 pip install fastapi
 
-*Note Recommendation Using Model Salu for Akeses Fastapi
+*Note Recommendation Using Model Sule for Akeses Fastapi
