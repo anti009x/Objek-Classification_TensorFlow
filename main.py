@@ -20,37 +20,99 @@ while True:
 
         labels = [label.strip() for label in labels]
 
+        persentasi = "100%"
+        berat= "Direkomendasikan Ke Motor"
+        ringan= "Direkomendasikan Ke Motor"
+
+
         def deskripsiringan():
-            return "Direkomendasikan Ke Motor"
+            print("Nama:", labels[index])
+            print (f"Deskripsi : {berat}") 
+            
 
         def deskripsiberat():
-            return "Direkomendasikan Ke Mobil"
+            print("Nama:", labels[index])
+            print (f"Deskripsi : {berat}") 
 
         def persentase():
-            return "100%"
+            print (f"Persentase Dectection Objek :  {persentasi}") 
 
-        def klasifikasi():
-            return "Ringan"
 
         if labels[index] == "Pulpen":
-            deskripsi = deskripsiringan()  
-            persen = persentase()
-            klasi = klasifikasi()
-            
-            print("Nama:", labels[index])
-            print("Deskripsi:", deskripsi)
-            print("Persentase Objek Detection:", persen)
-            print("Klasifikasi:", klasi)
+            deskripsiringan()
+            persentase()
+
         elif labels[index] == "Kursi":
-            deskripsi = deskripsiberat()  
-            persen = persentase()
-            klasi = klasifikasi()
-            print("Nama:", labels[index])
-            print("Deskripsi:", deskripsi)
-            print("Persentase Objek Detection:", persen)
-            print("Klasifikasi:", klasi)
+            deskripsiringan()
+            persentase()
         
-        
+        elif labels[index] == "Minuman":
+            deskripsiringan()
+            persentase()
+
+        elif labels[index] == "Sofa":
+            deskripsiberat()
+            persentase()
+
+        elif labels[index] == "Makanan":
+            deskripsiringan()
+            persentase()
+
+        elif labels[index] == "Buah":
+            deskripsiringan()
+            persentase()
+
+        elif labels[index] == "Meja":
+            deskripsiberat()
+            persentase()
+
+        elif labels[index] == "Baju":
+            deskripsiringan()
+            persentase()
+
+        elif labels[index] == "Keyboard":
+            deskripsiringan()
+            persentase()
+
+        elif labels[index] == "Kasur":
+            deskripsiberat()
+            persentase()
+
+        elif labels[index] == "Alas Kaki":
+            deskripsiringan() 
+            persentase()
+
+        elif labels[index] == "Lemari":
+            deskripsiberat()
+            persentase()
+
+        elif labels[index] == "Tetikus":
+            deskripsiringan()
+            persentase()
+
+        elif labels[index] == "Tas Punggung":
+            deskripsiringan()
+            persentase()
+
+        elif labels[index] == "Laptop":
+            deskripsiberat()
+            persentase()
+
+        elif labels[index] == "Monitor":
+            deskripsiberat()
+            persentase()
+
+        elif labels[index] == "Celana":
+            deskripsiringan()
+            persentase()
+
+        elif labels[index] == "Jaket":
+            deskripsiringan()
+            persentase()
+
+        elif labels[index] == "Buku":
+            deskripsiringan()
+            persentase()
 
         cv.imshow("Kamera", img)
 
