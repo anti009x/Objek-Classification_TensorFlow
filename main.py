@@ -19,17 +19,38 @@ while True:
             labels = file.readlines()
 
         labels = [label.strip() for label in labels]
-        #Baru 1 Model   
+
+        def deskripsiringan():
+            return "Direkomendasikan Ke Motor"
+
+        def deskripsiberat():
+            return "Direkomendasikan Ke Mobil"
+
+        def persentase():
+            return "100%"
+
+        def klasifikasi():
+            return "Ringan"
+
         if labels[index] == "Pulpen":
-            deskripsi = "Barang Direkomendasikan Motor"
-            persentase = "100%"
-            nama = "Pulpen"
-            klasifikasi = "Ringan"
+            deskripsi = deskripsiringan()  
+            persen = persentase()
+            klasi = klasifikasi()
             
             print("Nama:", labels[index])
             print("Deskripsi:", deskripsi)
-            print("Persentase Objek Detection:", persentase)
-            print("Klasifikasi:", klasifikasi)
+            print("Persentase Objek Detection:", persen)
+            print("Klasifikasi:", klasi)
+        elif labels[index] == "Kursi":
+            deskripsi = deskripsiberat()  
+            persen = persentase()
+            klasi = klasifikasi()
+            print("Nama:", labels[index])
+            print("Deskripsi:", deskripsi)
+            print("Persentase Objek Detection:", persen)
+            print("Klasifikasi:", klasi)
+        
+        
 
         cv.imshow("Kamera", img)
 
