@@ -41,7 +41,7 @@ async def klasifikasi(file: UploadFile = File(...)):
         return {"Nama": labels[index], "Deskripsi": berat}
 
     def persentase():
-        return {"Persentase Dectection Objek": persentasi}
+        return {"Persentase": persentasi}
 
     descriptions = {
         "Pulpen": deskripsiringan,
