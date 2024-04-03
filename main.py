@@ -29,8 +29,12 @@ async def klasifikasi(file: UploadFile = File(...)):
         labels = file.readlines()
 
     labels = [label.strip() for label in labels]
+    
+    confidence_scores = predict
+    total_confidence = sum(confidence_scores)
+    percentage_detections = [(score / total_confidence) * 100 for score in confidence_scores]
 
-    persentasi = "100%"
+    persentasi = percentage_detections
     berat = "Direkomendasikan Ke Mobil"
     ringan = "Direkomendasikan Ke Motor"
 
@@ -41,7 +45,8 @@ async def klasifikasi(file: UploadFile = File(...)):
         return {"Nama": labels[index], "Deskripsi": berat}
 
     def persentase():
-        return {"Persentase": persentasi}
+        # return {"Persentase": f"{round(max(persentasi))}%"} -> gunakan persentase %
+        return {"Percentage": max(persentasi)} #->gunakan nilai sebenarnya
 
     descriptions = {
         "Pulpen": deskripsiringan,
