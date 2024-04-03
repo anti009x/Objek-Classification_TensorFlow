@@ -1,5 +1,9 @@
 import cv2 as cv
 from cvzone.ClassificationModule import Classifier
+from fastapi import FastAPI, UploadFile, File
+import numpy as np
+
+app = FastAPI()
 
 model_path = "keras_model.h5" 
 labels_path = "labels.txt"  
@@ -9,119 +13,65 @@ cap = cv.VideoCapture(0)
 cap.set(cv.CAP_PROP_FRAME_WIDTH, 1280)
 cap.set(cv.CAP_PROP_FRAME_HEIGHT, 720)
 
-while True:
-    ret, img = cap.read()
+@app.get("/")
+async def read_root():
+    return {"API Sedang Jalan"}
 
-    if ret:
-        predict, index = data.getPrediction(img, color=(255, 0, 0))
+@app.post("/uploadgambar/")
+async def klasifikasi(file: UploadFile = File(...)):
+    contents = await file.read()
+    nparr = np.frombuffer(contents, np.uint8)
+    img = cv.imdecode(nparr, cv.IMREAD_COLOR)
 
-        with open(labels_path, 'r') as file:
-            labels = file.readlines()
+    predict, index = data.getPrediction(img, color=(255, 0, 0))
 
-        labels = [label.strip() for label in labels]
+    with open(labels_path, 'r') as file:
+        labels = file.readlines()
 
-        persentasi = "100%"
-        berat= "Direkomendasikan Ke Motor"
-        ringan= "Direkomendasikan Ke Motor"
+    labels = [label.strip() for label in labels]
 
+    persentasi = "100%"
+    berat = "Direkomendasikan Ke Mobil"
+    ringan = "Direkomendasikan Ke Motor"
 
-        def deskripsiringan():
-            print("Nama:", labels[index])
-            print (f"Deskripsi : {berat}") 
-            
+    def deskripsiringan():
+        return {"Nama": labels[index], "Deskripsi": ringan}
 
-        def deskripsiberat():
-            print("Nama:", labels[index])
-            print (f"Deskripsi : {berat}") 
+    def deskripsiberat():
+        return {"Nama": labels[index], "Deskripsi": berat}
 
-        def persentase():
-            print (f"Persentase Dectection Objek :  {persentasi}") 
+    def persentase():
+        return {"Persentase Dectection Objek": persentasi}
 
+    descriptions = {
+        "Pulpen": deskripsiringan,
+        "Kursi": deskripsiberat,
+        "Minuman": deskripsiringan,
+        "Sofa": deskripsiberat,
+        "Makanan": deskripsiringan,
+        "Buah": deskripsiringan,
+        "Meja": deskripsiberat,
+        "Baju": deskripsiringan,
+        "Keyboard": deskripsiringan,
+        "Kasur": deskripsiberat,
+        "Alas Kaki": deskripsiringan,
+        "Lemari": deskripsiberat,
+        "Tetikus": deskripsiringan,
+        "Tas Punggung": deskripsiringan,
+        "Laptop": deskripsiberat,
+        "Monitor": deskripsiberat,
+        "Celana": deskripsiringan,
+        "Jaket": deskripsiringan,
+        "Buku": deskripsiringan,
+    }
 
-        if labels[index] == "Pulpen":
-            deskripsiringan()
-            persentase()
-
-        elif labels[index] == "Kursi":
-            deskripsiringan()
-            persentase()
-        
-        elif labels[index] == "Minuman":
-            deskripsiringan()
-            persentase()
-
-        elif labels[index] == "Sofa":
-            deskripsiberat()
-            persentase()
-
-        elif labels[index] == "Makanan":
-            deskripsiringan()
-            persentase()
-
-        elif labels[index] == "Buah":
-            deskripsiringan()
-            persentase()
-
-        elif labels[index] == "Meja":
-            deskripsiberat()
-            persentase()
-
-        elif labels[index] == "Baju":
-            deskripsiringan()
-            persentase()
-
-        elif labels[index] == "Keyboard":
-            deskripsiringan()
-            persentase()
-
-        elif labels[index] == "Kasur":
-            deskripsiberat()
-            persentase()
-
-        elif labels[index] == "Alas Kaki":
-            deskripsiringan() 
-            persentase()
-
-        elif labels[index] == "Lemari":
-            deskripsiberat()
-            persentase()
-
-        elif labels[index] == "Tetikus":
-            deskripsiringan()
-            persentase()
-
-        elif labels[index] == "Tas Punggung":
-            deskripsiringan()
-            persentase()
-
-        elif labels[index] == "Laptop":
-            deskripsiberat()
-            persentase()
-
-        elif labels[index] == "Monitor":
-            deskripsiberat()
-            persentase()
-
-        elif labels[index] == "Celana":
-            deskripsiringan()
-            persentase()
-
-        elif labels[index] == "Jaket":
-            deskripsiringan()
-            persentase()
-
-        elif labels[index] == "Buku":
-            deskripsiringan()
-            persentase()
-
-        cv.imshow("Kamera", img)
-
-        key = cv.waitKey(1)
-        if key == 27: 
-            break
+    if labels[index] in descriptions:
+        obj_desc = descriptions[labels[index]]()
+        obj_desc.update(persentase())
+        return obj_desc
     else:
-        print("Invalid")
-        break
+        return {"error": "Objek tidak ditemukan dalam deskripsi"}
 
-cap.release()
-cv.destroyAllWindows()
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="127.0.0.1", port=8000)
