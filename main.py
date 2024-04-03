@@ -32,9 +32,9 @@ async def klasifikasi(file: UploadFile = File(...)):
     
     confidence_scores = predict
     total_confidence = sum(confidence_scores)
-    percentage_detections = [(score / total_confidence) * 100 for score in confidence_scores]
+    persentase_detections = [(score / total_confidence) * 100 for score in confidence_scores]
 
-    persentasi = percentage_detections
+    persentasi = persentase_detections
     berat = "Direkomendasikan Ke Mobil"
     ringan = "Direkomendasikan Ke Motor"
 
@@ -46,7 +46,7 @@ async def klasifikasi(file: UploadFile = File(...)):
 
     def persentase():
         # return {"Persentase": f"{round(max(persentasi))}%"} -> gunakan persentase %
-        return {"Percentage": max(persentasi)} #->gunakan nilai sebenarnya
+        return {"Persentase": max(persentasi)} #->gunakan nilai sebenarnya
 
     descriptions = {
         "Pulpen": deskripsiringan,
