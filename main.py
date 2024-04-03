@@ -1,7 +1,6 @@
 import cv2 as cv
 from cvzone.ClassificationModule import Classifier
 from fastapi import FastAPI, UploadFile, File
-
 import numpy as np
 
 app = FastAPI()
@@ -18,7 +17,7 @@ cap.set(cv.CAP_PROP_FRAME_HEIGHT, 720)
 async def read_root():
     return {"API Sedang Jalan"}
 
-@app.post("/uploadgambar/")  
+@app.post("/uploadgambar/")
 async def klasifikasi(file: UploadFile = File(...)):
     contents = await file.read()
     nparr = np.frombuffer(contents, np.uint8)
@@ -32,8 +31,8 @@ async def klasifikasi(file: UploadFile = File(...)):
     labels = [label.strip() for label in labels]
 
     persentasi = "100%"
-    berat= "Direkomendasikan Ke Mobil"
-    ringan= "Direkomendasikan Ke Motor"
+    berat = "Direkomendasikan Ke Mobil"
+    ringan = "Direkomendasikan Ke Motor"
 
     def deskripsiringan():
         return {"Nama": labels[index], "Deskripsi": ringan}
@@ -71,8 +70,8 @@ async def klasifikasi(file: UploadFile = File(...)):
         obj_desc.update(persentase())
         return obj_desc
     else:
-        return {"error"}
+        return {"error": "Objek tidak ditemukan dalam deskripsi"}
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="127.0.0.1", port=8000)
