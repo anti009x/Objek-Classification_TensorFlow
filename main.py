@@ -39,10 +39,10 @@ async def klasifikasi(file: UploadFile = File(...)):
     ringan = "Direkomendasikan Ke Motor"
 
     def deskripsiringan():
-        return {"Nama": labels[index], "Deskripsi": ringan}
+        return {"Nama_Barang": labels[index], "Deskripsi": ringan}
 
     def deskripsiberat():
-        return {"Nama": labels[index], "Deskripsi": berat}
+        return {"Nama_Barang": labels[index], "Deskripsi": berat}
 
     def persentase():
         # return {"Persentase": f"{round(max(persentasi))}%"} -> gunakan persentase %
