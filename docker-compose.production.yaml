@@ -1,0 +1,8 @@
+version : 3
+
+services:
+  web:
+    build: .
+    command: sh -c "uvicorn main:app host=127.0.0.1, port=8000, reload=True"
+    ports:
+      - 8000:8000

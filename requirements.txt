@@ -1,4 +1,4 @@
-fastapi==0.110.2
+fastapi
 python-multipart==0.0.9
 imutils==0.5.4
 scipy==1.13.0
