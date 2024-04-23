@@ -11,3 +11,5 @@ New folder
 app.spec
 
 oldmodel.py
+
+__pycache__
