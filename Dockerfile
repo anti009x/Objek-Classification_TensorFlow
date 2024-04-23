@@ -19,4 +19,4 @@ RUN apt-get update && apt-get install -y \
 # Note: Changed --host to 0.0.0.0 to allow connections from outside the container
 
 # If you still need to run the Python script, consider using a startup script that runs both commands or choose one as the entry point.
-CMD ["uvicorn", "main:app", "--host=0.0.0.0", "--$PORT", "--reload"]
+CMD ["uvicorn", "main:app", "--host=0.0.0.0", "--PORT=8000", "--reload"]
