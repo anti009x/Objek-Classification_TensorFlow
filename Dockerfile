@@ -11,5 +11,5 @@ RUN apt-get update && apt-get install -y \
     libglib2.0-0 \
     && rm -rf /var/lib/apt/lists/*
     
-CMD ["uvicorn", "main:app", "--host=127.0.0.1", "--port=8000", "--reload"]
+CMD ["uvicorn", "main:app", "--host=0.0.0.0", "--port=8000"]
 
