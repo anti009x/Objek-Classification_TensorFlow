@@ -1,10 +1,9 @@
 FROM python:3.11.5
 
-# WORKDIR /app
-# COPY . /app
+WORKDIR /app
+COPY . /app
 
 # Install Python dependencies
-RUN pip install -r requirements.txt
 RUN apt-get update && apt-get install -y \
     libgl1-mesa-glx \
     libgl1 \
