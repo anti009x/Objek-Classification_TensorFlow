@@ -14,3 +14,4 @@ RUN apt-get update && apt-get install -y \
     
 CMD ["uvicorn", "main:app", "--host=https://objek-classificationtensorflow-production.up.railway.app/", "--port=8000"]
 
+
