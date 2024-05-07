@@ -1,1 +1,1 @@
-docker build https://github.com/anti009x/Dockerfile
+docker build Dockerfile
