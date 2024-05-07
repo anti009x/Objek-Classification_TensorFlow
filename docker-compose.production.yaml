@@ -1,7 +1,0 @@
-version: '3'
-
-services:
-  web:
-    build: .
-    command: uvicorn main:app --host=https://objek-classificationtensorflow-production.up.railway.app/ --port=8000 --reload
-
