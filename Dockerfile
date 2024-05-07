@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 #Running Docker File Here !
-    
-CMD ["uvicorn", "main:app", "--port=8000"]
+#Please Readme cant change port and host
+CMD ["uvicorn", "main:app", "--host=127.0.0.0"]
 
 
