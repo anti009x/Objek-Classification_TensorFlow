@@ -12,6 +12,6 @@ RUN apt-get update && apt-get install -y \
     libglib2.0-0 \
     && rm -rf /var/lib/apt/lists/*
     
-CMD ["uvicorn", "main:app", "--host=https://objek-classificationtensorflow-production.up.railway.app/", "--port=8000"]
+CMD ["uvicorn", "main:app", "--port=8000"]
 
 
