@@ -19,8 +19,8 @@ cap.set(cv.CAP_PROP_FRAME_WIDTH, 1280)
 cap.set(cv.CAP_PROP_FRAME_HEIGHT, 720)
 
 # Calibration data
-known_width_in_pixels = 150  # This should be measured from an image with a known object
-known_width_in_cm = 30  # Actual width of the known object in cm
+known_width_in_pixels = 150  
+known_width_in_cm = 30  
 pixel_per_cm = known_width_in_pixels / known_width_in_cm
 
 while True:
@@ -31,6 +31,12 @@ while True:
         total_confidence = sum(confidence_scores)
         percentage_detections = [(score / total_confidence) * 100 for score in confidence_scores]
 
+        if isinstance(index, np.int64):
+            index = [index]  # Convert single numpy.int64 object to a list
+        predicted_classes = [labels[i] for i in index]  # Convert indices to class names
+        c = predicted_classes.count('Buku')  # Count occurrences of 'Buku'
+        cv.putText(img, f'{c}', (50, 50), cv.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2, cv.LINE_AA)
+        
         edged = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
         edged = cv.threshold(edged, 0, 255, cv.THRESH_BINARY_INV | cv.THRESH_OTSU)[1]
         edged = cv.dilate(edged, None, iterations=2)  # Increased dilation for better edge detection
@@ -48,11 +54,10 @@ while True:
                 box = perspective.order_points(box)
                 (tl, tr, br, bl) = box
 
-                       # Calculate width and height using the calibrated pixel_per_cm
-                wid = euclidean(tl, tr) / pixel_per_cm
-                ht = euclidean(tr, br) / pixel_per_cm
+                # Draw the largest contour in green with label names
+                cv.drawContours(img, [box.astype("int")], -1, (0, 255, 0), 2)
+                cv.putText(img, f"Label: {predicted_classes[0]}", (int(tl[0]), int(tl[1] - 10)), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
 
-                cv.drawContours(img, [box.astype("int")], -1, (0, 255, 0), 2)  # Draw the largest contour in green
                 mid_pt_horizontal = (tl[0] + int(abs(tr[0] - tl[0]) / 2), tl[1] + int(abs(tr[1] - tl[1]) / 2))
                 mid_pt_verticle = (tr[0] + int(abs(tr[0] - br[0]) / 2), tr[1] + int(abs(tr[1] - br[1]) / 2))
                 wid = euclidean(tl, tr) / pixel_per_cm
@@ -64,7 +69,7 @@ while True:
 
         for i, percentage in enumerate(percentage_detections):
             class_name = labels[i]
-            print(f"Class {class_name}: {percentage:.2f}% Tinggi : {wid:.1f}cm Lebar  :{ht:.1f}cm")
+            print(f"Class {class_name}: {percentage:.2f}% Height: {wid:.1f}cm Width: {ht:.1f}cm")
 
         cv.imshow("Kamera", img)
         key = cv.waitKey(1)
