@@ -57,9 +57,7 @@ while True:
         max_index = percentage_detections.index(max(percentage_detections))
         max_percentage = percentage_detections[max_index]
         class_name = labels[max_index]
-        
-        img, wid, ht = box_model(img, pixel_per_cm)
-        persentasi = persentase(persentase_detections)
+
 
         print(f"Class {class_name}: {max_percentage:.2f}%")
         text = f"Class {class_name}: {max_percentage:.2f}%"
